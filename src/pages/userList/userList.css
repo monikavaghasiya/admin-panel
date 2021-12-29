@@ -1,0 +1,30 @@
+.userList {
+    flex: 4;
+}
+
+.userDetail {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 5px;
+}
+
+.userListEdit{
+    color: #3bb077;
+    cursor: pointer;
+}
+
+.userListDelete {
+    color: red;
+    cursor: pointer;
+}
+
+.d-flex {
+    display: flex;
+}
