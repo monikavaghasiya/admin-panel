@@ -1,7 +1,7 @@
 .login-form
 {
     justify-content: center;
-    min-height: 90vh;
+    /*min-height: 90vh;*/
 }
 .button-block{
     width: 100%;
@@ -10,5 +10,22 @@
 {
     justify-content: center;
     min-height: 30vh;
-    padding: 50px;
+    padding: 30px 20px;
+}
+
+.loginContainer {
+    flex: 4;
+    margin: auto;
+}
+
+.mt-15 {
+    margin-top: 15px !important;
+}
+
+.mb-10 {
+    margin-bottom: 10px !important;
+}
+
+.mr-15 {
+    margin-right: 10px;
 }
