@@ -11,46 +11,36 @@ import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress'
 import "./login.css";
 import axiosInstance from "../../axios";
+import { useDispatch } from "react-redux";
+import { fetchLoginSuccess, fetchLoginFailure } from "../../redux/auth/loginAction";
 
-const Login = () => {
+
+const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [token, setToken] = useState();
     const [message, setMessage] = useState('');
+
+    const dispatch = useDispatch();
+
+    const setToken = (token) => {
+        localStorage.setItem('token', token);
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         setLoading(true);
         const data = new FormData(event.target);
-        console.log(data.get('email'), data.get('password'))
 
-        /*AuthService.login(data).then(
-            (response) => {
-                console.log('success', response);
-                setLoading(false);
-                setMessage('');
-            },
-            error => {
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-
-                console.log("resMessage = ",resMessage);
-                setMessage(resMessage);
-                setLoading(false);
-            }
-        )*/
         axiosInstance.post('/login', data)
         .then(response => {
             const responseData = response.data;
             const accessToken = responseData.access_token;
+            setMessage('');
             setToken(accessToken);
-            console.log(responseData);
             setLoading(false);
+            dispatch(fetchLoginSuccess(responseData));
+            props.history.push("/");
         })
         .catch(function (error) {
             const resMessage =
@@ -60,9 +50,9 @@ const Login = () => {
                 error.message ||
                 error.toString();
 
-            console.log("resMessage = ",resMessage);
             setMessage(resMessage);
             setLoading(false);
+            dispatch(fetchLoginFailure(resMessage));
         });
     };
 
