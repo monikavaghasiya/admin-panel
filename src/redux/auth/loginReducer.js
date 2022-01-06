@@ -1,12 +1,16 @@
-import {FETCH_LOGIN_REQ, FETCH_LOGIN_SUCCESS, FETCH_LOGIN_FAILURE, SET_LOGOUT} from "./loginTypes";
+import {FETCH_LOGIN_FAILURE, FETCH_LOGIN_REQ, FETCH_LOGIN_SUCCESS, SET_LOGOUT, UPDATE_AUTH_USER_DETAIL, FAIL_UPDATE_AUTH_USER_DETAIL} from "./loginTypes";
+
+const accessToken = localStorage.getItem('token')?? '';
+const isLogin = accessToken ? true : false;
 
 const initialState = {
     loading: false,
     user: [],
-    token: '',
+    token: accessToken,
     errorMessage: '',
-    isLogin: false
+    isLogin: isLogin
 };
+console.log("accessToken", accessToken, initialState.user);
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -32,7 +36,23 @@ const reducer = (state = initialState, action) => {
                 errorMessage: action.payload,
                 isLogin: false
             }
+        case UPDATE_AUTH_USER_DETAIL:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
+                errorMessage: '',
+            }
+        case FAIL_UPDATE_AUTH_USER_DETAIL:
+            return {
+                loading: false,
+                user: [],
+                token: '',
+                errorMessage: action.payload,
+                isLogin: false
+            }
         case SET_LOGOUT:
+            localStorage.removeItem('token');
             return {
                 loading: false,
                 user: [],

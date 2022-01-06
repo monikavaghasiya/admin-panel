@@ -1,36 +1,39 @@
-import React, {useEffect, useState} from 'react';
 import axiosInstance from "../axios";
+import { useSelector, useDispatch } from "react-redux";
+// import {updateAuthUserDetail, failUpdateAuthUserDetail} from "../redux/auth/loginAction";
 
-const API_URL = "http://local.admin-panel/api/";
+const GetUser = () => {
+    const token = useSelector(state => state.token);
+    const user = useSelector(state => state.user);
+    // const dispatch = useDispatch();
 
-export const AuthService = () => {
-    const [user, setUser] = useState();
+    if (token !== '' && (typeof user === "undefined" || user.length === 0)) {
 
-    function logout () {
-        localStorage.removeItem("token");
-    }
+        let headers = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        };
 
-    function login(data) {
-        return axiosInstance
-            .post(API_URL + "login", data)
+        console.log("get user called");
+
+        axiosInstance.get('/auth-user', headers)
             .then(response => {
-                if (response.data.access_token) {
-                    localStorage.setItem("token", JSON.stringify(response.data.access_token));
-                }
+                // dispatch(updateAuthUserDetail(response.data.data.user));
+                console.log("success", response.data)
+            })
+            .catch(function (error) {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log("error", resMessage)
+                // dispatch(failUpdateAuthUserDetail(resMessage));
 
-                setUser(response.data.user);
-
-                return response.data;
             });
-    }
-
-    function getCurrentUser() {
-        return user;
-    }
-
-    function register(data) {
-        return axiosInstance.post(API_URL + "register", data);
     }
 };
 
-export default AuthService;
+export default GetUser;

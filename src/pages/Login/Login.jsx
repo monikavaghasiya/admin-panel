@@ -13,7 +13,7 @@ import "./login.css";
 import axiosInstance from "../../axios";
 import { useDispatch } from "react-redux";
 import { fetchLoginSuccess, fetchLoginFailure } from "../../redux/auth/loginAction";
-
+import { useHistory } from "react-router-dom";
 
 const Login = (props) => {
     const [username, setUsername] = useState('');
@@ -21,13 +21,14 @@ const Login = (props) => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
 
+    const history = useHistory();
     const dispatch = useDispatch();
 
     const setToken = (token) => {
         localStorage.setItem('token', token);
     };
 
-    const handleSubmit = (event) => {
+    async function handleSubmit(event) {
         event.preventDefault();
         setLoading(true);
         const data = new FormData(event.target);
@@ -40,7 +41,7 @@ const Login = (props) => {
             setToken(accessToken);
             setLoading(false);
             dispatch(fetchLoginSuccess(responseData));
-            props.history.push("/");
+            history.push("/", {replace: true});
         })
         .catch(function (error) {
             const resMessage =

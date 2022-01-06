@@ -1,4 +1,11 @@
-import {FETCH_LOGIN_REQ, FETCH_LOGIN_SUCCESS, FETCH_LOGIN_FAILURE, SET_LOGOUT} from "./loginTypes";
+import {
+    FETCH_LOGIN_REQ,
+    FETCH_LOGIN_SUCCESS,
+    FETCH_LOGIN_FAILURE,
+    SET_LOGOUT,
+    UPDATE_AUTH_USER_DETAIL,
+    FAIL_UPDATE_AUTH_USER_DETAIL
+} from "./loginTypes";
 
 export const fetchLoginRequest = (email, password) => {
     return {
@@ -21,8 +28,22 @@ export const fetchLoginFailure = (message) => {
     }
 };
 
-export const setLogout =() => {
+export const setLogout = () => {
     return {
         type: SET_LOGOUT
+    }
+};
+
+export const updateAuthUserDetail = (user) => {
+    return {
+        type: UPDATE_AUTH_USER_DETAIL,
+        payload: user
+    }
+};
+
+export const failUpdateAuthUserDetail = (message) => {
+    return {
+        type: FAIL_UPDATE_AUTH_USER_DETAIL,
+        payload: message
     }
 };

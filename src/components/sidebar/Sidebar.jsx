@@ -1,6 +1,6 @@
 import React from 'react';
 import "./sidebar.css";
-import {Link, useLocation } from 'react-router-dom';
+import { NavLink as Link, useLocation } from 'react-router-dom';
 import { LineStyle, Timeline, TrendingUp, PermIdentity, Storefront, AttachMoney, BarChart, MailOutline, Feedback, Forum, WorkOutline, BugReport } from "@material-ui/icons";
 
 const Sidebar = () => {
@@ -20,7 +20,7 @@ const Sidebar = () => {
                         </li>
                         <li className="sidebarListItem">
                             <Timeline/>
-                            Analytics
+                            <Link to="/analytics">Analytics</Link>
                         </li>
                         <li className="sidebarListItem">
                             <TrendingUp/>

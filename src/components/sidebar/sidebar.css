@@ -33,7 +33,7 @@
     border-radius: 10px;
 }
 
-.sidebarListItem.active, .sidebarListItem:hover {
+.sidebarListItem.active, .sidebarListItem:hover, li a.active {
     background-color: #c9c9c9;
 }
 
